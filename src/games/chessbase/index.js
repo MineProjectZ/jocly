@@ -5962,7 +5962,7 @@ exports.games = (function () {
 					},
 					"module": "chessbase",
 					"plazza": "true",
-					"thumbnail": "leychessbeta-thumbnail.png",
+					"thumbnail": "leychessbeta-thumb.png",
 					"released": 1402412178,
 					"credits": {
 						"en": "leychessbeta-credits.html"
