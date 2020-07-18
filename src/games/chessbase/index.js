@@ -5977,7 +5977,7 @@ exports.games = (function () {
  								"image|/res/fairy/eagle/eagle-normalmap.jpg",
  								"smoothedfilegeo|0|/res/fairy/camel/camel.js",
  								"image|/res/fairy/camel/camel-diffusemap.jpg",
- 								"image|/res/fairy/camel/camel-normalmap.jpg"							      
+ 								"image|/res/fairy/camel/camel-normalmap.jpg"
  							],
  							"world": config_view_skins_world,
  							"camera": config_view_skins_camera
@@ -6511,7 +6511,7 @@ exports.games = (function () {
 				}
 			},
 			"viewScripts": config_view_js_ml
-		},	
+		},
 		{
 			"name": "koth-chess",
 			"modelScripts": modelScripts_koth,

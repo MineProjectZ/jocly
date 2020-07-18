@@ -1,26 +1,26 @@
 /*
  * Copyright(c) 2013-2017 - jocly.com
  *
- * You are allowed to use and modify this source code as long as it is exclusively for use in the Jocly API. 
+ * You are allowed to use and modify this source code as long as it is exclusively for use in the Jocly API.
  *
  * Original authors: Jocly team
  *
  */
- 
 
- 
+
+
 
 (function() {
-	
+
 	View.Game.cbDefineView = function() {
 
 		var metamachyBoardDelta = {
 			//notationMode: 'in',
 			//notationDebug: true,
-		};		
+		};
 		var metamachyBoard3d = $.extend(true,{},this.cbGridBoardClassic3DMargin,metamachyBoardDelta);
 		var metamachyBoard2d = $.extend(true,{},this.cbGridBoardClassic2DNoMargin,metamachyBoardDelta);
-		
+
 		return {
 			coords: {
 				"2d": this.cbGridBoard.coordsFn.call(this,metamachyBoard2d),
@@ -42,10 +42,10 @@
 			],
 			board: {
 				"2d": {
-					draw: this.cbDrawBoardFn(metamachyBoard2d),										
+					draw: this.cbDrawBoardFn(metamachyBoard2d),
 				},
 				"3d": {
-					display: this.cbDisplayBoardFn(metamachyBoard3d),					
+					display: this.cbDisplayBoardFn(metamachyBoard3d),
 				},
 			},
 			clicker: {
@@ -71,8 +71,8 @@
 		};
 	}
 
-	/* 
-	 * Make the knight & the camel jump when moving, the elephant & the lion when moving 2 squares, the cannon when capturing 
+	/*
+	 * Make the knight & the camel jump when moving, the elephant & the lion when moving 2 squares, the cannon when capturing
 	 */
 	View.Board.cbMoveMidZ = function(aGame,aMove,zFrom,zTo) {
 		if(aMove.a=='N' || aMove.a=='M' || (aMove.a=='E' && aGame.g.distGraph[aMove.f][aMove.t]==2) || (aMove.a=='L' && aGame.g.distGraph[aMove.f][aMove.t]==2) || (aMove.a=='K' && aGame.g.distGraph[aMove.f][aMove.t]==2) || (aMove.a=='C' && aMove.c!=null))
@@ -82,7 +82,7 @@
 	}
 
 	/*
-	 * View.Game.xdInit overriding to create initial setup gadgets 
+	 * View.Game.xdInit overriding to create initial setup gadgets
 	 */
 	var SuperViewGameXdInit = View.Game.xdInit;
 	View.Game.xdInit = function(xdv) {
@@ -145,11 +145,11 @@
 							});
 						}
 					},
-				});				
+				});
 			})(setup);
 		}
 	}
-	
+
 	/*
 	 * View.Board.xdInput overriding to handle setup phase
 	 */
@@ -165,7 +165,7 @@
 				initial: {
 					setupDone: false,
 				},
-				getActions: function(moves,currentInput) { 
+				getActions: function(moves,currentInput) {
 					var actions={};
 					if(!currentInput.setupDone) {
 						moves.forEach(function(move) {
@@ -184,7 +184,7 @@
 		} else
 			return SuperViewBoardxdInput.apply(this,arguments);
 	}
-	
+
 	/*
 	 * View.Board.cbAnimate overriding to prevent animation on setup
 	 */
@@ -195,7 +195,7 @@
 		else
 			SuperViewBoardcbAnimate.apply(this,arguments);
 	}
-	
+
 	/*
 	 * View.Board.xdDisplay overriding to prevent displaying KQEL before setup
 	 */
@@ -211,10 +211,9 @@
 			});
 			SuperViewBoardxdDisplay.apply(this,arguments);
 			for(var pos in hidden)
-				this.pieces[hidden[pos]].p=parseInt(pos);			
+				this.pieces[hidden[pos]].p=parseInt(pos);
 		} else
 			SuperViewBoardxdDisplay.apply(this,arguments);
 	}
-	
-})();
 
+})();
