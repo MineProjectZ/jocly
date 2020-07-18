@@ -1,23 +1,23 @@
 /*
  * Copyright(c) 2013-2017 - jocly.com
  *
- * You are allowed to use and modify this source code as long as it is exclusively for use in the Jocly API. 
+ * You are allowed to use and modify this source code as long as it is exclusively for use in the Jocly API.
  *
  * Original authors: Jocly team
  *
  */
- 
 
- 
+
+
 
 (function() {
-	
+
 	var geometry = Model.Game.cbBoardGeometryGrid(12,12);
-	
+
 	Model.Game.cbDefine = function() {
-		
+
 		var $this = this;
-		
+
 		/*
 		 * Movement/capture graph for the prince
 		 */
@@ -40,7 +40,7 @@
 				graph // forward direction
 			);
 		}
-		
+
 		/*
 		 * Movement/capture graph for the eagle
 		 */
@@ -68,7 +68,7 @@
 							if(away.length>0)
 								graph[pos].push($this.cbTypedArray(away));
 						}
-					}					
+					}
 				});
 			}
 			return $this.cbMergeGraphs(geometry,
@@ -76,11 +76,11 @@
 			   graph
 			);
 		}
-		
+
 		return {
-			
+
 			geometry: geometry,
-			
+
 			pieceTypes: {
 
 				0: {
@@ -92,7 +92,7 @@
 					fenAbbrev: 'P',
 					epCatch: false,
 				},
-				
+
 				1: {
 					name: 'ipawn-w',
 					aspect: 'fr-pawn',
@@ -104,7 +104,7 @@
 					epTarget: true,
 					epCatch: false,
 				},
-				
+
 				2: {
 					name: 'pawn-b',
 					aspect: 'fr-pawn',
@@ -127,7 +127,7 @@
 					epTarget: true,
 					epCatch: false,
 				},
-				
+
 				4: {
 					name: 'knight',
 					aspect: 'fr-knight',
@@ -136,7 +136,7 @@
 					abbrev: 'N',
 					initial: [{s:1,p:14},{s:1,p:21},{s:-1,p:122},{s:-1,p:129}],
 				},
-				
+
 				5: {
 					name: 'bishop',
 					aspect: 'fr-bishop',
@@ -164,7 +164,7 @@
 					abbrev: 'Q',
 					initial: [{s:1,p:18},{s:-1,p:126}],
 				},
-				
+
 				8: {
 					name: 'king',
 					aspect: 'fr-king',
@@ -173,7 +173,7 @@
 					abbrev: 'K',
 					initial: [{s:1,p:17},{s:-1,p:125}],
 				},
-				
+
 				9: {
 					name: 'cannon',
 					aspect: 'fr-cannon2',
@@ -182,7 +182,7 @@
 					abbrev: 'C',
 					initial: [{s:1,p:0},{s:1,p:11},{s:-1,p:132},{s:-1,p:143}],
 				},
-				
+
 	            10: {
 	            	name: 'elephant',
 	            	aspect: 'fr-elephant',
@@ -190,8 +190,8 @@
 	            	value: 2.5,
 	            	abbrev: 'E',
 	            	initial: [{s:1,p:12},{s:1,p:23},{s:-1,p:120},{s:-1,p:131}],
-	            },				
-			
+	            },
+
 			 11: {
 	            	name: 'prince-w',
 	            	aspect: 'fr-admiral',
@@ -220,7 +220,7 @@
 	            	value: 2,
 	            	abbrev: 'M',
 	            	initial: [{s:1,p:1},{s:1,p:10},{s:-1,p:133},{s:-1,p:142}],
-	            },	
+	            },
 
 			14: {
 	            	name: 'lion',
@@ -233,7 +233,7 @@
 	            	value: 7.5,
 	            	abbrev: 'L',
 	            	initial: [{s:1,p:5},{s:-1,p:137}],
-	            },	
+	            },
 			15: {
 	            	name: 'eagle',
 	            	aspect: 'fr-eagle',
@@ -267,7 +267,7 @@
 	            	value: 14,
 	            	abbrev: 'D',
 	            	initial: [{s:1,p:4},{s:-1,p:136}],
-	            },	
+	            },
 			18: {
 	            	name: 'lighthouse',
 	            	aspect: 'fr-lighthouse',
@@ -306,7 +306,7 @@
 					abbrev: 'Co',
 					initial: [{s:1,p:7},{s:-1,p:139}],
 				},
-				
+
 			21: {
 					name: 'cardinal',
 					aspect: 'fr-cardinal',
@@ -330,7 +330,7 @@
 					castle: true,
 				},
 				},
-				
+
 			promote: function(aGame,piece,move) {
 				if(piece.t==1 && geometry.R(move.t)==11)
 					return [14,15,20,16,17,18];
@@ -348,7 +348,7 @@
 
 	/*
 	 * Model.Board.GenerateMoves:
-	 *   - handle setup phase 
+	 *   - handle setup phase
 	 *   - handle king special move: a kind of castle involving only the king
 	 */
 	var kingLongMoves={
@@ -363,7 +363,7 @@
 	}
 	var SuperModelBoardGenerateMoves=Model.Board.GenerateMoves;
 	Model.Board.GenerateMoves = function(aGame) {
-		// first moves (white and black) are managed specifically to setup K,Q,E,L initial position 
+		// first moves (white and black) are managed specifically to setup K,Q,E,L initial position
 		if(this.setupState===undefined)  {
 			this.mMoves=[{}];
 			return;
@@ -415,7 +415,7 @@
 			}
 		}
 	}
-	
+
 	/*
 	 * Model.Board.CopyFrom overriding to copy setupState property
 	 */
@@ -424,9 +424,9 @@
 		SuperModelBoardCopyFrom.apply(this,arguments);
 		this.setupState = aBoard.setupState;
 	}
-	
+
 	/*
-	 * Model.Board.Evaluate overriding: in setup phase, no evaluation 
+	 * Model.Board.Evaluate overriding: in setup phase, no evaluation
 	 */
 	var SuperModelBoardEvaluate = Model.Board.Evaluate;
 	Model.Board.Evaluate = function(aGame) {
@@ -434,7 +434,7 @@
 			return;
 		SuperModelBoardEvaluate.apply(this,arguments);
 	}
-	
+
 	/*
 	 * Model.Board.ApplyMove overriding: setup phase and king special move
 	 */
@@ -502,7 +502,7 @@
 			this.board[remaining[-1][queen]]=indexes[-1].Q;
 			piece = this.pieces[indexes[-1].Q];
 			piece.p=remaining[-1][queen];
-			$this.zSign=aGame.zobrist.update($this.zSign,"board",piece.t,remaining[-1][queen]);				
+			$this.zSign=aGame.zobrist.update($this.zSign,"board",piece.t,remaining[-1][queen]);
 			remaining[-1].splice(queen,1);
 			var eagle,lion;
 			setup%=2;
@@ -511,7 +511,7 @@
 				lion=1;
 			} else {
 				eagle=1;
-				lion=0;				
+				lion=0;
 			}
 			this.board[remaining[1][eagle]]=indexes[1].E;
 			piece = this.pieces[indexes[1].E];
@@ -529,8 +529,8 @@
 			this.board[remaining[-1][lion]]=indexes[-1].L;
 			piece = this.pieces[indexes[-1].L];
 			piece.p=remaining[-1][lion];
-			$this.zSign=aGame.zobrist.update($this.zSign,"board",piece.t,remaining[1][lion]);		
-			
+			$this.zSign=aGame.zobrist.update($this.zSign,"board",piece.t,remaining[1][lion]);
+
 			this.setupState="done";
 		} else
 			SuperModelBoardApplyMove.apply(this,arguments);
@@ -549,11 +549,11 @@
 		}
 		return SuperModelMoveToString.apply(this,arguments);
 	}
-	
+
 	/*
 	 * Model.Board.CompactMoveString overriding to help reading PJN game transcripts
 	 */
-	var SuperModelBoardCompactMoveString = Model.Board.CompactMoveString; 
+	var SuperModelBoardCompactMoveString = Model.Board.CompactMoveString;
 	Model.Board.CompactMoveString = function(aGame,aMove,allMoves) {
 		if(typeof aMove.ToString!="function") // ensure proper move object, if necessary
 			aMove=aGame.CreateMove(aMove);
@@ -570,5 +570,5 @@
 			return [aGame.CreateMove({setup:Math.floor(Math.random()*12)})];
 		return null;
 	}
-	
+
 })();
